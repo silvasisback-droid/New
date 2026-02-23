@@ -25,7 +25,6 @@ jobs:
 
       - name: Upload EXE to dist
         run: |
-          mkdir -p dist
           move .\dist\main.exe dist\main.exe
 
       - name: Commit and push EXE
