@@ -31,8 +31,10 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b exe-artifact-${{ github.run_id }}
           git add dist/main.exe
           git commit -m "Add built main.exe from GitHub Actions" || echo "No changes to commit"
-          git push
+          git push origin exe-artifact-${{ github.run_id }}
+          gh pr create --title "Add built main.exe" --body "Automated PR to add built main.exe from workflow run ${{ github.run_id }}" --base main || echo "PR already exists or failed"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
