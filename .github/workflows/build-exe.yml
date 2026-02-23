@@ -28,6 +28,7 @@ jobs:
           move .\dist\main.exe dist\main.exe
 
       - name: Commit and push EXE
+        shell: pwsh
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -36,8 +37,7 @@ jobs:
           git commit -m "Add built main.exe from GitHub Actions" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.connect }}@github.com/${{ github.repository }}.git
           git push origin exe-artifact-${{ github.run_id }}
-          export GH_TOKEN=${{ secrets.connect }}
+          $env:GH_TOKEN = "${{ secrets.connect }}"
           gh pr create --title "Add built main.exe" --body "Automated PR to add built main.exe from workflow run ${{ github.run_id }}" --base main || echo "PR already exists or failed"
         env:
           GITHUB_TOKEN: ${{ secrets.connect }}
-          GH_TOKEN: ${{ secrets.connect }}
