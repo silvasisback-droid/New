@@ -37,4 +37,4 @@ jobs:
           git push origin exe-artifact-${{ github.run_id }}
           gh pr create --title "Add built main.exe" --body "Automated PR to add built main.exe from workflow run ${{ github.run_id }}" --base main || echo "PR already exists or failed"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.connect }}
