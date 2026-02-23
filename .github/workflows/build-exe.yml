@@ -36,8 +36,11 @@ jobs:
           git add dist/main.exe
           git commit -m "Add built main.exe from GitHub Actions" || echo "No changes to commit"
           git remote set-url origin https://x-access-token:${{ secrets.connect }}@github.com/${{ github.repository }}.git
+          git remote -v
+          git config --list --show-origin
           git push origin exe-artifact-${{ github.run_id }}
           $env:GH_TOKEN = "${{ secrets.connect }}"
+          gh auth status
           gh pr create --title "Add built main.exe" --body "Automated PR to add built main.exe from workflow run ${{ github.run_id }}" --base main || echo "PR already exists or failed"
         env:
           GITHUB_TOKEN: ${{ secrets.connect }}
